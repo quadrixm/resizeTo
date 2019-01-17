@@ -23,7 +23,7 @@ public class Main {
 
         File cropPathFile = new File("image_crop.png");
         try {
-            BufferedImage cropImage = ImageUtil.process(bufferedImage, toDimen);
+            BufferedImage cropImage = ImageUtil.resize(bufferedImage, toDimen, true);
             ImageIO.write(cropImage,"png", cropPathFile);
         } catch (IOException e) {
             e.printStackTrace();
