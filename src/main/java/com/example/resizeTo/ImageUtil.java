@@ -1,4 +1,4 @@
-package com.example.cropTo;
+package com.example.resizeTo;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -31,17 +31,17 @@ public class ImageUtil {
         ImageIO.write(cropImage, format, image);
     }
 
-    public static BufferedImage resize(BufferedImage bufferedImage, Dimension toDimen, Boolean crop) {
+    public static BufferedImage resize(BufferedImage bufferedImage, Dimension toDimen, Boolean zoom) {
 
         if (bufferedImage == null || toDimen == null) return null;
 
         Dimension imgDimen = new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight());
 
-        Dimension resizedDimen = ImageUtil.getResizedDimension(imgDimen, toDimen, crop);
+        Dimension resizedDimen = ImageUtil.getResizedDimension(imgDimen, toDimen, zoom);
 
-        Point cropInitialPoint = getCropInitialPoint(resizedDimen, toDimen, crop);
+        Point cropInitialPoint = getCropInitialPoint(resizedDimen, toDimen, zoom);
 
-        if (crop != null && crop) {
+        if (zoom != null && zoom) {
             BufferedImage resizedImage = ImageUtil.resizeImage(bufferedImage, resizedDimen);
             return cropImage(resizedImage, cropInitialPoint, toDimen);
         } else {
@@ -111,9 +111,10 @@ public class ImageUtil {
                 BufferedImage.TYPE_INT_RGB);
         final Graphics2D graphics2D = bufferedImage.createGraphics();
         graphics2D.setComposite(AlphaComposite.Src);
-        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
-        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+//        graphics2D.setBackground(Color.WHITE);
+//        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+//        graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
+//        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         graphics2D.drawImage(image, 0, 0, dimension.width, dimension.height, null);
         graphics2D.dispose();
 
@@ -122,14 +123,13 @@ public class ImageUtil {
 
     private static BufferedImage resizeImageWithoutCrop(BufferedImage image, Dimension dimension, Point initialPoint, Dimension imageDimen) {
         final BufferedImage bufferedImage = new BufferedImage(dimension.width, dimension.height,
-                BufferedImage.TYPE_INT_RGB);
+                BufferedImage.TYPE_INT_ARGB);
         final Graphics2D graphics2D = bufferedImage.createGraphics();
         graphics2D.setComposite(AlphaComposite.Src);
-        graphics2D.setBackground(Color.WHITE);
-//        graphics2D.setBackground(new Color(255, 255, 255, 0));
-        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
-        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+//        graphics2D.setBackground(Color.WHITE);
+//        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+//        graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
+//        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         graphics2D.drawImage(image, initialPoint.x, initialPoint.y, imageDimen.width, imageDimen.height, null);
         graphics2D.dispose();
 
@@ -137,3 +137,4 @@ public class ImageUtil {
     }
 
 }
+

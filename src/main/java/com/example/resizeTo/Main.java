@@ -1,4 +1,4 @@
-package com.example.cropTo;
+package com.example.resizeTo;
 
 
 import javax.imageio.ImageIO;
